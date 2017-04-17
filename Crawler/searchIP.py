@@ -9,14 +9,24 @@ def searchIP(IP):
         if r.encoding == 'ISO-8859-1':
             r.encoding = r.apparent_encoding;
 
-        address = re.search('<li>本站数据：(?P<realAddress>.+?)</li>',r.text);      #找到存放IP地址的数据所在
-        address1 = re.search('<li>参考数据1：(?P<realAddress1>.+?)</li>',r.text);   #找到参考地址1
-        address2 = re.search('<li>参考数据2：(?P<realAddress2>.+?)</li>',r.text);   #找到参考地址2
+        #address = re.search('<li>本站数据：(?P<realAddress>.+?)</li>',r.text);      #找到存放IP地址的数据所在
+        #address1 = re.search('<li>参考数据1：(?P<realAddress1>.+?)</li>',r.text);   #找到参考地址1
+        #address2 = re.search('<li>参考数据2：(?P<realAddress2>.+?)</li>',r.text);   #找到参考地址2
 
         addressList = [];
-        addressList.append(address.group('realAddress'));
-        addressList.append(address1.group('realAddress1'));
-        addressList.append(address2.group('realAddress2'));
+        #addressList.append(address.group('realAddress'));
+        #addressList.append(address1.group('realAddress1'));
+        #addressList.append(address2.group('realAddress2'));
+        
+        #使用BeautifulSoup来帮助实现
+        soup = BeautifulSoup(r.text, 'html.parser');
+        address = soup.find_all(string = re.compile('本站数据：'));
+        address1 = soup.find_all(string = re.compile('参考数据1：'));
+        address2 = soup.find_all(string = re.compile('参考数据2：'));
+        addressList.append(address[0][5:]);
+        addressList.append(address1[0][6:]);
+        addressList.append(address2[0][6:]);
+        
         return addressList;
     except:
         print('exception!');
