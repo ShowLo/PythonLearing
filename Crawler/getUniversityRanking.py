@@ -47,7 +47,7 @@ def savaAsExcel(ulist,num,filePath,fileName):
     :param filePath: string
     :param fileName: string
     """
-    workbook = xlwt.Workbook(encoding='ascii');
+    workbook = xlwt.Workbook(encoding='ascii');                                     #创建Excel工作表
     worksheet = workbook.add_sheet('universityRanking');
     colNum = len(ulist[0]);
 
