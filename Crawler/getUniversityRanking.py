@@ -40,13 +40,15 @@ def printUlist(ulist,num):
         print('{:^10}\t{:^10}\t{:^10}'.format(u[0],u[1],u[2]));
 
 #保存为excel文件
-def savaAsExcel(ulist,num,filePath,fileName):
+def savaAsExcel(ulist,filePath,fileName,num = None):
     """
     :param ulist: list
     :param num: int
     :param filePath: string
     :param fileName: string
     """
+    if num == None:                                                                 #保存全部
+        num = len(ulist);
     workbook = xlwt.Workbook(encoding='ascii');                                     #创建Excel工作表
     worksheet = workbook.add_sheet('universityRanking');
     colNum = len(ulist[0]);
@@ -74,6 +76,6 @@ def main():
     fillUniversityList(uinfo,html);
     filePath = 'D://爬虫获取//excel/';
     fileName = 'universityRanking.xls';
-    savaAsExcel(uinfo,100,filePath,fileName);
+    savaAsExcel(uinfo,filePath,fileName);
     
 main();
